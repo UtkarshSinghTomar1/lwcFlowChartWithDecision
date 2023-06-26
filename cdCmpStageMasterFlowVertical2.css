@@ -1,0 +1,72 @@
+.node text { font: 16px sans-serif; }
+  
+  .link {
+    fill: none;
+    stroke:dodgerblue;
+    stroke-width: 1px;
+  }
+  .flow-decision-tree{
+    overflow:auto;
+    font-size: 100%;
+  }
+
+  .terminator.start{
+      margin-top: 10px;
+  }
+
+  .terminator.end{
+        margin-bottom: 10px;
+    }
+
+  .flow-decision-tree start ul:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      display:none;
+      left: 50%;
+      height: 1em;
+      border-left: 3px solid black;
+      }
+
+  .flow-family-tree{box-sizing:border-box;outline:1px;}
+
+.flow-decision-tree {
+    outline-color:rgb(6, 6, 7);
+    font-size: 100%;
+    font-size:16px;overflow:auto
+  }
+  
+  .flow-decision-tree *::before {
+    box-sizing: border-box;
+    outline-color:rgb(65, 65, 157);
+    font-size: 100%;
+  }
+ 
+.flow-decision-tree li:before {
+    border-top: 2pt solid dodgerblue;
+  } 
+  
+.flow-decision-tree li:after {
+    border-left: 2pt solid dodgerblue;
+  }
+  
+.flow-decision-tree ul:after {
+    border-left:  2pt solid dodgerblue;
+  }
+
+  .poligon{
+    display: inline-block;
+    position: relative;
+    border: solid 1px;
+    background: black;
+    box-sizing: border-box;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    }
+ 
+  .flow-decision-tree *,
+  .flow-decision-tree *::after,
+  .flow-decision-tree *::before {
+    box-sizing: border-box;
+    outline-color:black;
+  }
+
