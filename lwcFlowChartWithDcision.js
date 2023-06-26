@@ -1,7 +1,7 @@
 import { LightningElement,api } from 'lwc';
 import { loadScript,loadStyle } from 'lightning/platformResourceLoader';
 import flowmincss from '@salesforce/resourceUrl/flowmincss';
-import getBusinessrocessAndStage3 from '@salesforce/apex/CDBusinessProcessWithStageController.getBusinessrocessAndStage3';
+import someApexMethod from '@salesforce/apex/someApexClass.someApexMethod';
 import jquery from '@salesforce/resourceUrl/jquery';
 export default class CdCmpStageMasterFlowTest5 extends LightningElement {
 
@@ -27,7 +27,7 @@ export default class CdCmpStageMasterFlowTest5 extends LightningElement {
     }
 
     intializeData(){
-           getBusinessrocessAndStage3({recordId : this.recordId })
+           someApexMethod({recordId : this.recordId })
            .then(result => {
             if(result != undefined && result != null){
              const dataFromApex = JSON.parse(result);
@@ -39,21 +39,35 @@ export default class CdCmpStageMasterFlowTest5 extends LightningElement {
              }
              console.log('dataMap',this.dataMap);
              if(dataFromApex != undefined && dataFromApex != null ){
-
-             var items = dataFromApex.childRecords;
-             var firstStage = dataFromApex.parentRecord;
+              // you can use data from return here. We are just using harcoded child itema
+             //var items = dataFromApex.childRecords;
+                 var items =[
+      {
+         "name":"India",
+         "Id":"1",
+          Parent = ""
+      },
+      {
+         "Parent":"1",
+         "name":"Karnataka",
+         "Id":"2",
+      },
+      {
+         "name":"Bangalore",
+         "parent":"2",
+         "Id": "3"
+      }
+   ]
+             
              var data1 = this.unflatten(items);
               //Child Object
               const child = {
-              name: firstStage.name,
-              sfdcId:firstStage.sfdcId,
-              Id:firstStage.Id,
-              stage:firstStage.stage,
+              name: 'Start',
               children: data1,
               };
               //Assign child to parent
              const data = {
-               parent: child, // property name may be an identifier
+               parent: child, 
               };
              console.log('data from vs',JSON.stringify(data));
 
@@ -143,7 +157,7 @@ export default class CdCmpStageMasterFlowTest5 extends LightningElement {
                }
 
 
-
+                     // change class to decision if its decision and if its start and end use class terminator
                    // get details
                                    getDetails = (details) => {
                                        debugger;
@@ -162,22 +176,8 @@ export default class CdCmpStageMasterFlowTest5 extends LightningElement {
                                             const substr1 = this.string_between_strings('href="/', '">',details[detail]);
                                             console.log(substr1);
                                             console.log(this.dataMap.get(substr1));
-                                            if(this.dataMap.get(substr1).stage == 'start'){
-                                               this.markupArray.push(`<span style='background-color: #DCDCDC;outline:solid 1px;' class='terminator start'> ${details[detail]}</span>`);
+                                            this.markupArray.push(`<span style='background-color: #f1f4fa;outline:solid 1px;' class='process'> ${details[detail]} </span>`);
                                             }
-                                            else if(this.dataMap.get(substr1).stage == 'Decision'){
-                                               this.markupArray.push(`<div class="poligon"><span style='background-color: #FFFACD;outline:solid 1px;' class='decision'> ${details[detail]} </span></div>`);
-                                            }
-                                            else if(this.dataMap.get(substr1).stage == 'end'){
-                                                this.markupArray.push(`<span style='background-color: #DCDCDC;outline:solid 1px;' class='terminator end'> ${details[detail]}</span>`);
-                                             }
-                                            else{
-                                              this.markupArray.push(`<span style='background-color: #f1f4fa;outline:solid 1px;' class='process'> ${details[detail]} </span>`);
-                                            }
-
-
-
-                                         }
                                        }
                                      }
                                    }
